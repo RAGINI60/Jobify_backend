@@ -16,15 +16,28 @@ export const postApplication = catchAsyncErrors(async (req, res, next) => {
   }
 
   const { resume } = req.files;
-  const allowedFormats = ["image/png", "image/jpeg", "image/webp"];
-  if (!allowedFormats.includes(resume.mimetype)) {
-    return next(
-      new ErrorHandler("Invalid file type. Please upload a PNG file.", 400)
-    );
-  }
-  const cloudinaryResponse = await cloudinary.uploader.upload(
-    resume.tempFilePath
-  );
+ const allowedFormats=["image/png", "image/jpg", "image/jpeg", "image/webp", "application/pdf"];
+    
+    if(!allowedFormats.includes(resume.mimetype)){
+        return next(
+            new ErrorHandler(
+                "Please upload a valid file", 
+                400
+            )
+        );
+    }
+    if(resume.size>10*1024*1024){
+        return next(
+            new ErrorHandler(
+                "Invalid file type. Please upload your resume in image or pdf with size less than 10MB", 
+                400
+            )
+        );
+    }
+  const cloudinaryResponse=await cloudinary.uploader.upload(resume.tempFilePath);
+  // const cloudinaryResponse = await cloudinary.uploader.upload(
+  //   resume.tempFilePath
+  // );
 
   if (!cloudinaryResponse || cloudinaryResponse.error) {
     console.error(
