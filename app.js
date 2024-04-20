@@ -12,8 +12,8 @@ const app=express();
 config({path:"./config/config.env"});
 
 app.use(cors({
-    origin=[process.env.https://job-ify.netlify.app/],
-    methods:["GET","POST","DELETE","PUT"],
+    origin: [process.env['https://job-ify.netlify.app/']],
+   methods:["GET","POST","DELETE","PUT"],
     credentials:true,
 })
 );
