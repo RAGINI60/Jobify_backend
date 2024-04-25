@@ -12,7 +12,7 @@ const app=express();
 config({path:"./config/config.env"});
 
 app.use(cors({
-    origin:"https://job-ify.netlify.app/",
+    origin:"https://job-ify.netlify.app",
    methods:["GET","POST","DELETE","PUT"],
     credentials:true,
 })
